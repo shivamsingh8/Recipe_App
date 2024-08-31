@@ -11,9 +11,10 @@ const App_key='4d32d02e84aec5b350b4ce793019fa35';
 
 
 const Fetchapidata=async()=>{
-const response=await fetch(`https://api.edamam.com/search?q=chicken&app_id=${App_id}&app_key=${App_key}`);
+const response=await fetch(`https://api.edamam.com/search?q=${query}&app_id=${App_id}&app_key=${App_key}`);
 const data=await response.json();
 setApidata(data.hits);
+console.log(data.hits)
 }
 
 useEffect(()=>{
@@ -33,18 +34,20 @@ const Handlesubmit= e =>{
   return (
     <div className="App">
       <form  className='search-form' onSubmit={Handlesubmit}>
-      <input className="Search-bar" type="text" value={request} onChange={Handlechange} />    
+      <input className="Search-bar" type="text" value={request} onChange={Handlechange} placeholder='Search recipes'/>    
       <button className="Search-button">Search</button>
       </form>
+      <div className='apidata'>
       {
         apidata.map(data=><Recipes 
           key={data.recipe.label}
         calories={data.recipe.calories}
         title={data.recipe.label}
-        image={data.recipe.image
-        }
+        image={data.recipe.image}
+        ingredients={data.recipe.ingredients}
         />)
       }
+      </div>
     </div>
   );
 }
